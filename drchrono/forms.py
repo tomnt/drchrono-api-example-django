@@ -3,10 +3,7 @@ from django.forms import widgets
 
 
 # Add your forms here
-# Added
 from django.contrib.auth import authenticate
-
-# from django import forms
 
 
 class CreateAppointmentForm(forms.Form):
@@ -16,4 +13,4 @@ class CreateAppointmentForm(forms.Form):
 
 class AppointmentsForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        super(MyForm, self).__init__(*args, **kwargs)
+        super(AppointmentsForm, self).__init__(*args, **kwargs)
