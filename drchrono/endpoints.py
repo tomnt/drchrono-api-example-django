@@ -2,16 +2,20 @@ import requests
 import logging
 
 
-class APIException(Exception): pass
+class APIException(Exception):
+    pass
 
 
-class Forbidden(APIException): pass
+class Forbidden(APIException):
+    pass
 
 
-class NotFound(APIException): pass
+class NotFound(APIException):
+    pass
 
 
-class Conflict(APIException): pass
+class Conflict(APIException):
+    pass
 
 
 ERROR_CODES = {
@@ -38,8 +42,9 @@ class BaseEndpoint(object):
 
     Subclasses should implement a specific endpoint.
     """
-    BASE_URL = 'https://drchrono.com/api/'
-    endpoint = ''
+
+    BASE_URL = "https://drchrono.com/api/"
+    endpoint = ""
 
     def __init__(self, access_token=None):
         """
@@ -63,18 +68,19 @@ class BaseEndpoint(object):
 
         Modifies kwargs in place. Returns None.
         """
-        kwargs['headers'] = kwargs.get('headers', {})
-        kwargs['headers'].update({
-            'Authorization': 'Bearer {}'.format(self.access_token),
-
-        })
+        kwargs["headers"] = kwargs.get("headers", {})
+        kwargs["headers"].update(
+            {
+                "Authorization": "Bearer {}".format(self.access_token),
+            }
+        )
 
     def _json_or_exception(self, response):
         """
         returns the JSON content or raises an exception, based on what kind of response (2XX/4XX) we get
         """
         if response.ok:
-            if response.status_code != 204: # No Content
+            if response.status_code != 204:  # No Content
                 return response.json()
         else:
             exe = ERROR_CODES.get(response.status_code, APIException)
@@ -82,7 +88,7 @@ class BaseEndpoint(object):
 
     def _request(self, method, *args, **kwargs):
         # dirty, universal way to use the requests library directly for debugging
-        url = self._url(kwargs.pop(id, ''))
+        url = self._url(kwargs.pop(id, ""))
         self._auth_headers(kwargs)
         return getattr(requests, method)(url, *args, **kwargs)
 
@@ -97,11 +103,13 @@ class BaseEndpoint(object):
         # Response will be one page out of a paginated results list
         response = requests.get(url, params=params, **kwargs)
         if response.ok:
-            self.logger.debug("list got page {}".format('url'))
+            self.logger.debug("list got page {}".format("url"))
             while url:
                 data = response.json()
-                url = data['next']  # Same as the resource URL, but with the page query parameter present
-                for result in data['results']:
+                url = data[
+                    "next"
+                ]  # Same as the resource URL, but with the page query parameter present
+                for result in data["results"]:
                     yield result
         else:
             exe = ERROR_CODES.get(response.status_code, APIException)
@@ -193,23 +201,13 @@ class AppointmentEndpoint(BaseEndpoint):
         params = params or {}
         if start and end:
             date_range = "{}/{}".format(start, end)
-            params['date_range'] = date_range
+            params["date_range"] = date_range
         elif date:
-            params['date'] = date
-        if 'date' not in params and 'date_range' not in params:
+            params["date"] = date
+        if "date" not in params and "date_range" not in params:
             raise Exception("Must provide either start & end, or date argument")
         return super(AppointmentEndpoint, self).list(params, **kwargs)
 
-    # def create(self, params=None, date=None, start=None, end=None, **kwargs):
-    #     params = params or {}
-    #     if start and end:
-    #         date_range = "{}/{}".format(start, end)
-    #         params['date_range'] = date_range
-    #     elif date:
-    #         params['date'] = date
-    #     if 'date' not in params and 'date_range' not in params:
-    #         raise Exception("Must provide either start & end, or date argument")
-    #     return super(AppointmentEndpoint, self).create(data=params, **kwargs)
 
 class DoctorEndpoint(BaseEndpoint):
     endpoint = "doctors"
