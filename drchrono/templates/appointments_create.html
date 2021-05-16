@@ -84,7 +84,7 @@ body {
             <td>
               <select name="color">
                 {% for name, code in colors.items %}
-                  <option value={{code}}>{{name}}{%if code%} ( {{a.color}} ){%endif%}</option>
+                  <option value={{code}}>{{name}}{%if code%} ( {{code}} ){%endif%}</option>
                 {% endfor %}
               </select>
             </td>
