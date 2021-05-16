@@ -12,7 +12,7 @@ import datetime
 from .api import Api
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import MyForm, CreateAppointmentForm
+from .forms import AppointmentsForm, CreateAppointmentForm
 import numpy as np
 
 
@@ -92,7 +92,7 @@ colors = {
 
 
 def appointments_list(request):
-    form = MyForm(request.POST or None)
+    form = AppointmentsForm(request.POST or None)
     doctor_welcome = DoctorWelcome()
     api = Api(doctor_welcome.get_token())
     doctor = doctor_welcome.make_api_request()

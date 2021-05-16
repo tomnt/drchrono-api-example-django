@@ -32,7 +32,6 @@ class Api:
         Returns:
             list: Patients list
         """
-        #access_token = self.get_token()
         api = PatientEndpoint(self.access_token)
         g = api.list(params, **kwargs)
         return self.__get_list(g)
@@ -48,11 +47,9 @@ class Api:
         Returns:
             list: Profiles list
         """
-        #access_token = self.get_token()
         api = AppointmentProfileEndpoint(self.access_token)
         g = api.list(params, **kwargs)
         return self.__get_list(g)
-        # return next(api.list(params, kwargs))
 
     def appointments_list(self, params=None, date=None, start=None, end=None, **kwargs):
         """ Obtains Appointments list
@@ -74,7 +71,6 @@ class Api:
         Returns:
             list: appointments list
         """
-        #access_token = self.get_token()
         api = AppointmentEndpoint(self.access_token)
         g = api.list(params, date, start, end, **kwargs)
         return self.__get_list(g)
@@ -87,7 +83,6 @@ class Api:
             data (dict): Data to update. Example: data = {"scheduled_time": "2021-05-06T10:39:00"}
             partial (bool, optional): Defaults to True.
         """
-        #access_token = self.get_token()
         api = AppointmentEndpoint(self.access_token)
         api.update(id, data, partial=True, **kwargs)
 
@@ -110,7 +105,6 @@ class Api:
             list: appointments list
         """
         api = AppointmentEndpoint(self.access_token)
-        #api.create(params, date, start, end, **kwargs)
         api.create(params, **kwargs)
 
 
@@ -127,7 +121,3 @@ class Api:
         """
         api = OfficeEndpoint(self.access_token)
         return next(api.list())
-
-    
-        # g = api.list(params, **kwargs)
-        # return self.__get_list(g)
