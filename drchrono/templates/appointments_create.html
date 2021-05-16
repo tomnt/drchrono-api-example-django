@@ -1,0 +1,98 @@
+{% extends "base_nav.html" %}
+{% block title %}Create an appointment{% endblock %}
+{% block extra_header %}
+<style type="text/css">
+body {
+	background: #eee !important;
+}
+.wrapper {
+	margin-top: 20px;
+  margin-bottom: 80px;
+}
+</style>
+{% endblock %}
+{% block body %}
+<div class = "container">
+    <div class="wrapper">
+     <!--
+      <form class="" method = 'POST' action= '' enctype = "multipart/form-data" style="margin-top: -30px; margin-bottom: -18px;">{% csrf_token %}      
+        <h2 class="">{{title}}</h2>
+        {{form.as_p }}
+        </label><br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{{title}}</button>
+        <br>
+        {% if title == "Login" %}<h5>Not Registered? <a href = "/accounts/register">Register Here</a></h5>{% endif %}
+        {% if title == "Register" %}<h5>Already Registered? <a href = "/accounts/login">Login Here</a></h5>{% endif %}
+
+      </form>
+      {u'website': None, u'first_name': u'Tom', u'last_name': u'Shimizu', u'suffix': None, u'country': u'US', u'specialty': u'Acupuncture'      
+      , u'email': u'tom_wrk@outlook.com', u'office_phone': u'2345642331', u'npi_number': u'', u'group_npi_number': None, u'home_phone': u'', u'practice_group': 310312, u'cell_phone': u'2345642331', u'id': 294899, u'job_title': u'API/Developer'}
+     -->
+
+    {% include "doctor.html" %}
+
+    <h2 class="">Create an Appointment</h2>
+    <br>
+    <form class="" method = 'POST' action= '' enctype = "multipart/form-data" style="margin-top: -30px; margin-bottom: -18px;">{% csrf_token %}
+    <table class="table  table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Scheduled Time*</th>
+          <th scope="col">Duration*</th>
+          <th scope="col">Patient*</th>
+          <th scope="col">Exam room*</th>
+          <th scope="col">Notes</th>
+          <th scope="col">Reason</th>
+          <th scope="col">Status</th>
+          <th scope="col">Billing Status</th>
+          <th scope="col">Color</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>
+              <input type="date" name="s_date" required>
+              <input type="time" name="s_time" required>
+            </td>
+            <td><input type="number" name="duration"/ required></td>
+            <td>
+              <select name="patient" required>
+                  <option></option>
+                {% for p in patients %}
+                  <option value={{p.id}} >{{p.first_name}} {{p.last_name}} ({{p.id}})</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td>
+              <select name="exam_room" required>
+                  <option></option>
+                {% for r in exam_rooms %}
+                  <option value={{r.index}} {%if r.index == a.exam_room%}selected{%endif%}>{{r.name}}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td><input type="text" name="notes"/></td>
+            <td><input type="text" name="reason"/></td>
+            <td>
+              <select name="status">
+                {% for s in statuses %}
+                  <option value={{s}}>{{s}}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td><input type="text" name="billing_status"/></td>
+            <td>
+              <select name="color">
+                {% for name, code in colors.items %}
+                  <option value={{code}}>{{name}}{%if code%} ( {{a.color}} ){%endif%}</option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-success btn-block" type="submit"  value = 1>Create</button>
+  </form>
+  </div>
+</div>
+{% endblock %}

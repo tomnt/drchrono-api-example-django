@@ -200,6 +200,16 @@ class AppointmentEndpoint(BaseEndpoint):
             raise Exception("Must provide either start & end, or date argument")
         return super(AppointmentEndpoint, self).list(params, **kwargs)
 
+    # def create(self, params=None, date=None, start=None, end=None, **kwargs):
+    #     params = params or {}
+    #     if start and end:
+    #         date_range = "{}/{}".format(start, end)
+    #         params['date_range'] = date_range
+    #     elif date:
+    #         params['date'] = date
+    #     if 'date' not in params and 'date_range' not in params:
+    #         raise Exception("Must provide either start & end, or date argument")
+    #     return super(AppointmentEndpoint, self).create(data=params, **kwargs)
 
 class DoctorEndpoint(BaseEndpoint):
     endpoint = "doctors"
@@ -216,3 +226,7 @@ class DoctorEndpoint(BaseEndpoint):
 
 class AppointmentProfileEndpoint(BaseEndpoint):
     endpoint = "appointment_profiles"
+
+
+class OfficeEndpoint(BaseEndpoint):
+    endpoint = "offices"

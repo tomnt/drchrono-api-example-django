@@ -1,0 +1,164 @@
+{% extends "base_nav.html" %}
+{% block title %}Appointments{% endblock %}
+{% block extra_header %}
+<style type="text/css">
+body {
+	background: #eee !important;
+}
+.wrapper {
+	margin-top: 20px;
+  margin-bottom: 80px;
+}
+</style>
+{% endblock %}
+{% block body %}
+<div class = "container">
+    <div class="wrapper">
+     <!--
+      <form class="" method = 'POST' action= '' enctype = "multipart/form-data" style="margin-top: -30px; margin-bottom: -18px;">{% csrf_token %}      
+        <h2 class="">{{title}}</h2>
+        {{form.as_p }}
+        </label><br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">{{title}}</button>
+        <br>
+
+        {% if title == "Login" %}<h5>Not Registered? <a href = "/accounts/register">Register Here</a></h5>{% endif %}
+        {% if title == "Register" %}<h5>Already Registered? <a href = "/accounts/login">Login Here</a></h5>{% endif %}
+
+      </form>
+      {u'website': None, u'first_name': u'Tom', u'last_name': u'Shimizu', u'suffix': None, u'country': u'US', u'specialty': u'Acupuncture'      
+      , u'email': u'tom_wrk@outlook.com', u'office_phone': u'2345642331', u'npi_number': u'', u'group_npi_number': None, u'home_phone': u'', u'practice_group': 310312, u'cell_phone': u'2345642331', u'id': 294899, u'job_title': u'API/Developer'}
+     -->
+
+    {% include "doctor.html" %}
+    <div class="panel panel-primary">
+      <div class="panel-heading"> Date range </div>
+      <div class="panel-body">
+        <br>
+        <form class="" method = 'POST' action= '' enctype = "multipart/form-data" style="margin-top: -30px; margin-bottom: -18px;">{% csrf_token %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> <input type="date" name="start" value="{{start}}"> </td>
+                <td> <input type="date" name="end" value="{{end}}"> </td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-success btn-block" type="submit" name="update_range" value = 1>Update range</button>
+        </form>
+        <br>
+      </div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">Waiting time</div>
+      <div class="panel-body">
+        <canvas id="myPieChart"></canvas>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+        <script>
+        var ctx = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ["Appointment: {{duration}} min", "Waiting: {{waiting}} min"],
+            datasets: [{
+                backgroundColor: [
+                    "#58A27C",
+                    "#BB5179",
+                ],
+                data: [{{duration}}, {{waiting}}]
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Total Waiting/Appointment minutes'
+            }
+          }
+        });
+        </script>
+      </div>
+    </div>
+
+        <h2 class="">Appointments</h2>
+        <table class="table  table-bordered table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Scheduled Time</th>
+              <th scope="col">Duration</th>
+              <th scope="col">Patient</th>
+              <th scope="col">Notes</th>
+              <th scope="col">Reason</th>
+              <th scope="col">Status</th>
+              <th scope="col">Billing Status</th>
+              <th scope="col">Color</th>
+              <th scope="col">deleted_flag</th>
+              <th scope="col">Exam room</th>
+              <th scope="col">Update/Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in appointments %}
+              <tr bgcolor="{{a.color}}">
+                <form class="" method = 'POST' action= '' enctype = "multipart/form-data" style="margin-top: -30px; margin-bottom: -18px;">{% csrf_token %}
+                <td>
+                  {{a.id}}
+                  <input type="hidden" name="id" value="{{a.id}}" >
+                </td>
+                <td>
+                  <input type="date" name="s_date" value="{{a.s_date}}" >
+                  <input type="time" name="s_time" value = "{{a.s_time}}">
+                </td>
+                <td><input type="number" name="duration" value="{{a.duration}}"/></td>
+                <td>
+                  <select name="patient">
+                    {% for p in patients %}
+                      <option value={{p.id}} {%if p.id == a.patient%}selected{%endif%}>{{p.first_name}} {{p.last_name}} ({{p.id}})</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td><input type="text" name="notes" value="{{a.notes}}"/></td>
+                <td><input type="text" name="reason" value="{{a.reason}}"/></td>
+                <td>
+                  <select name="status">
+                    {% for s in statuses %}
+                      <option value={{s}} {%if s == a.status%}selected{%endif%}>{{s}}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td><input type="text" name="billing_status" value="{{a.billing_status}}"/></td>
+                <td>
+                  <select name="color">
+                    {% for name, code in colors.items %}
+                      <option value={{code}} {%if code == a.color%}selected{%endif%}>{{name}}{%if code%} ( {{a.color}} ){%endif%}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td>{{a.deleted_flag}}</td>
+                <td>
+                  <select name="exam_room">
+                    {% for r in exam_rooms %}
+                      <option value={{r.index}} {%if r.index == a.exam_room%}selected{%endif%}>{{r.name}}</option>
+                    {% endfor %}
+                  </select>
+                </td>                
+                <td>
+                  <button class="btn btn-success btn-block" type="submit" name="update" value = 1>Update</button>
+                  <button class="btn btn-danger btn-block" type="submit" name="delete" value = 1>Delete</button>
+                 </td>
+              </form>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock %}

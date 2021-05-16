@@ -128,21 +128,75 @@ LOGIN_URL = 'login/drchrono'
 SHELL_PLUS = "ipython"
 
 
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': 'debug.log',
+#         },
+#     },
+#     'loggers': {
+#         'drchrono.endpoints.*': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
+
+
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'handlers': {
         'file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
         },
     },
     'loggers': {
-        'drchrono.endpoints.*': {
+        # 'drchrono.endpoints.*': {
+        #     'handlers': ['file'],
+        #     'level': 'INFO',
+        #     'propagate': True,
+        # },
+        '': {
             'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
+            'level': 'INFO',
+            'propagate': False,
         },
+        # 'django': {
+        #     'handlers': ['file'],
+        #     'level': 'INFO',
+        #     'propagate': False,
+        # },
     },
 }
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'production': {
+#             'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d '
+#                       '%(pathname)s:%(lineno)d %(message)s'
+#         },
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': 'debug.log',
+#         },
+#     },
+#     'loggers': {
+#         'drchrono.endpoints.*': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     },
+# }
