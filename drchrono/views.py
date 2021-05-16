@@ -61,13 +61,6 @@ class DoctorWelcome(TemplateView):
         # If this works, then your oAuth setup is working correctly.
         doctor_details = self.make_api_request()
         kwargs["doctor"] = doctor_details
-
-        api = Api(self.get_token())
-        kwargs["patient"] = api.patients_list()[0]
-        kwargs["appointment"] = api.appointments_list(
-            start="2021-01-01", end="2021-06-01"
-        )[0]
-        # kwargs["appointment_profile"] = api.appointment_profiles_list()
         return kwargs
 
 
