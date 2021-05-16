@@ -3,40 +3,5 @@
 {% block extra_header %}{% endblock %}
 {% block body %}
 <h1>Welcome {{ doctor.first_name }} {{ doctor.last_name }}</h1>
-
-<h2>Doctor</h2>
-{{ doctor }}
-
-<h2>Patient</h2>
-{{ patient }}
-
-<h2>Appointment Profile</h2>
-{{ appointment_profile }}
-
-<h2>Appointment</h2>
-{{ appointment }}
-
+{% include "doctor.html" %}
 {% endblock %}
-
-
-<!--
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome to drchrono</title>
-</head>
-<body>
-<h1>Welcome {{ doctor.first_name }} {{ doctor.last_name }}</h1>
-
-<h2>Doctor</h2>
-{{ doctor }}
-
-<h2>Patient</h2>
-{{ patient }}
-
-<h2>Appointment Profile</h2>
-{{ appointment_profile }}
-</body>
-</html>
--->
