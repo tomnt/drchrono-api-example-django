@@ -1,0 +1,125 @@
+{% extends "base_nav.html" %}
+{% block title %}Patients{% endblock %}
+{% block extra_header %}
+<style type="text/css">
+body {
+	background: #eee !important;
+}
+.wrapper {
+	margin-top: 20px;
+  margin-bottom: 80px;
+}
+</style>
+{% endblock %}
+{% block body %}
+<div class = "container">
+    <div class="wrapper">
+    
+    {% include "doctor.html" %}
+
+        <h2 class="">Patients</h2>
+        <table class="table  table-bordered table-hover">
+          <thead>
+            <tr>
+              <th scope="col">patient photo</th>
+              <th scope="col">ID</th>
+              <th scope="col">chart id</th>
+              <th scope="col">first name</th>
+              <th scope="col">middle name</th>
+              <th scope="col">last name</th>
+              <th scope="col">date of birth</th>
+              <th scope="col">social security number</th>
+              <th scope="col">address</th>
+              <th scope="col">city</th>
+              <th scope="col">state</th>
+              <th scope="col">zip code</th>
+              <th scope="col">cell phone</th>
+              <th scope="col">home phone</th>
+              <th scope="col">email</th>
+              <th scope="col">date of first appointment</th>
+              <th scope="col">date of last appointment</th>
+              <th scope="col">gender</th>
+              <th scope="col">preferred language</th>
+              <th scope="col">ethnicity</th>
+              <th scope="col">race</th>
+              <th scope="col">patient photo</th>
+              <th scope="col">patient photo date</th>
+              <th scope="col">primary care physician</th>
+              <th scope="col">employer</th>
+              <th scope="col">employer address</th>
+              <th scope="col">employer city</th>
+              <th scope="col">employer state</th>
+              <th scope="col">employer zip code</th>
+              <th scope="col">office phone</th>
+              <th scope="col">offices</th>
+              <th scope="col">responsible party name</th>
+              <th scope="col">responsible party relation</th>
+              <th scope="col">responsible party phone</th>
+              <th scope="col">responsible party email</th>
+              <th scope="col">emergency contact name</th>
+              <th scope="col">emergency contact relation</th>
+              <th scope="col">emergency contact phone</th>
+              <th scope="col">disable sms messages</th>
+              <th scope="col">copay</th>
+              <th scope="col">Update/Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in patients %}
+              <tr bgcolor="{{a.color}}">
+                <form class="" method = 'POST' action= '' enctype = "multipart/form-data" style="margin-top: -30px; margin-bottom: -18px;">{% csrf_token %}
+                  <td><img src="{{p.patient_photo}}" class="img-rounded img-responsive"></td>
+                <td>
+                  {{p.id}}
+                  <input type="hidden" name="id" value="{{p.id}}" >
+                </td>
+                <td><input type="text" name="chart_id"" value="{{p.chart_id}}" ></td>
+                <td><input type="text" name="first_name" value="{{p.first_name}}" ></td>
+                <td><input type="text" name="middle_name"" value="{{p.middle_name}}" ></td>
+                <td><input type="text" name="last_name"" value="{{p.last_name}}" ></td>
+                <td><input type="date" name="date_of_birth"" value="{{p.date_of_birth}}" ></td>
+                <td><input type="text" name="social_security_number"" value="{{p.social_security_number}}" ></td>
+                <td><input type="text" name="address"" value="{{p.address}}" ></td>
+                <td><input type="text" name="city"" value="{{p.city}}" ></td>
+                <td><input type="text" name="state"" value="{{p.state}}" ></td>
+                <td><input type="text" name="zip_code"" value="{{p.zip_code}}" ></td>
+                <td><input type="tel" name="cell_phone"" value="{{p.cell_phone}}" ></td>
+                <td><input type="tel" name="home_phone"" value="{{p.home_phone}}" ></td>
+                <td><input type="email" name="email"" value="{{p.email}}" ></td>
+                <td><input type="date" name="date_of_first_appointment"" value="{{p.date_of_first_appointment}}" ></td>
+                <td><input type="date" name="date_of_last_appointment"" value="{{p.date_of_last_appointment}}" ></td>
+                <td><input type="text" name="gender"" value="{{p.gender}}" ></td>
+                <td><input type="text" name="preferred_language"" value="{{p.preferred_language}}" ></td>
+                <td><input type="text" name="ethnicity"" value="{{p.ethnicity}}" ></td>
+                <td><input type="text" name="race"" value="{{p.race}}" ></td>
+                <td><input type="url" name="patient_photo"" value="{{p.patient_photo}}" ></td>
+                <td><input type="text" name="patient_photo_date"" value="{{p.patient_photo_date}}" ></td>
+                <td><input type="text" name="primary_care_physician"" value="{{p.primary_care_physician}}" ></td>
+                <td><input type="text" name="employer"" value="{{p.employer}}" ></td>
+                <td><input type="text" name="employer_address"" value="{{p.employer_address}}" ></td>
+                <td><input type="text" name="employer_city"" value="{{p.employer_city}}" ></td>
+                <td><input type="text" name="employer_state"" value="{{p.employer_state}}" ></td>
+                <td><input type="text" name="employer_zip_code"" value="{{p.employer_zip_code}}" ></td>
+                <td><input type="tel" name="office_phone"" value="{{p.office_phone}}" ></td>
+                <td><input type="text" name="offices"" value="{{p.offices}}" ></td>
+                <td><input type="text" name="responsible_party_name"" value="{{p.responsible_party_name}}" ></td>
+                <td><input type="text" name="responsible_party_relation"" value="{{p.responsible_party_relation}}" ></td>
+                <td><input type="tel" name="responsible_party_phone"" value="{{p.responsible_party_phone}}" ></td>
+                <td><input type="email" name="responsible_party_email"" value="{{p.responsible_party_email}}" ></td>
+                <td><input type="text" name="emergency_contact_name"" value="{{p.emergency_contact_name}}" ></td>
+                <td><input type="text" name="emergency_contact_relation"" value="{{p.emergency_contact_relation}}" ></td>
+                <td><input type="tel" name="emergency_contact_phone"" value="{{p.emergency_contact_phone}}" ></td>
+                <td><input type="text" name="disable_sms_messages"" value="{{p.disable_sms_messages}}" ></td>
+                <td><input type="number" name="copay"" value="{{p.copay}}" ></td>
+                <td>
+                  <button class="btn btn-success btn-block" type="submit" name="update" value = 1>Update</button>
+                  <button class="btn btn-danger btn-block" type="submit" name="delete" value = 1>Delete</button>
+                 </td>
+              </form>
+              </tr>
+            {% endfor %}          
+          </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
