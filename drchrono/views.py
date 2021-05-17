@@ -261,13 +261,9 @@ def patients_list(request):
         if patient_photo_date:
             data["patient_photo_date"] = patient_photo_date
         api.patients_update(id=form.data.get("id"), data=data)
-    # Deleting a patient
-    #####################
-    if bool(form.data.get("delete")):
-        api.appointments_update(id=form.data.get("id"), data={"deleted_flag": True})
-
+    # Patients
+    ###########
     patients = api.patients_list(params={"doctor": doctor["id"]})
-
     for k, p in enumerate(patients):
         if not p["responsible_party_email"]:
             patients[k]["responsible_party_email"] = ""
