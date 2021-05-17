@@ -79,6 +79,7 @@ http://localhost:8080/setup/
 - Sort/filter appointments & patients list.
 - Submitted data cleaning
 - Remove hard codings(8 working hours/day, colors, parameters, etc)
+- Make executable by Docker.
 - Patient's screen
 - Admin screen
 
