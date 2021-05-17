@@ -79,7 +79,7 @@ http://localhost:8080/setup/
 - Sort/filter appointments & patients list.
 - Submitted data cleaning
 - Remove hard codings(8 working hours/day, colors, parameters, etc)
-- Make executable by Docker.
+- Make executable by Docker.(ImportError: No module named parse: urllib.parse, social_core/utils.py: Maybe caused by requirements.txt fix?)
 - Patient's screen
 - Admin screen
 
