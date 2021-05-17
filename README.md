@@ -74,6 +74,7 @@ http://localhost:8080/setup/
 
 - Logout (by UserSocialAuth)
 - Create a new appointment.(Invalid timestamp error)
+- Can't update appointments' deleted_flag. Can't be filtered by deleted_flag.
 - Check duplicated appointment(at the same time & doctor)
 - Exception handling(Date range, Not found, etc)
 - Sort/filter appointments & patients list.
