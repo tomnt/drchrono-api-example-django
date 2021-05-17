@@ -36,6 +36,27 @@ class Api:
         g = api.list(params, **kwargs)
         return self.__get_list(g)
 
+    def patients_update(self, id, data, **kwargs):
+        """ Updates an appointment
+            https://toms.drchrono.com/api-docs/#operation/patients_update
+        Args:
+            id (int): id
+            data (dict):
+                chart_id	: string (chart_id)
+                date_of_birth	: string (date_of_birth)
+                doctor	: integer (doctor)
+                email	: string (email)
+                ethnicity	: string (ethnicity)
+                first_name	: string (first_name)
+                gender	: string (gender)
+                last_name	: string (last_name)
+                preferred_language	: string (preferred_language)
+                race	: string (race)
+                since	: string (since)
+        """
+        api = PatientEndpoint(self.access_token)
+        api.update(id, data, **kwargs)
+
     def appointment_profiles_list(self,  params=None, **kwargs):
         """ Obtains profiles list
             https://toms.drchrono.com/api-docs/#operation/appointment_profiles_list
