@@ -1,6 +1,8 @@
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
+import drchrono
 from social_django.models import UserSocialAuth
+from drchrono import settings
 
 from drchrono.endpoints import (
     DoctorEndpoint,
@@ -38,9 +40,6 @@ class DoctorWelcome(TemplateView):
         """
         oauth_provider = UserSocialAuth.objects.get(provider="drchrono")
         access_token = oauth_provider.extra_data["access_token"]
-
-        # UserSocialAuth.disconnect()
-
         return access_token
 
     def make_api_request(self):
@@ -74,6 +73,7 @@ colors = {
     "Alice Blue": "rgb(220,229,255)",
     "Rose Bud": "rgb(255,162,148)",
     "Bisque": "rgb(255,222,192)",
+    "White": "White",
     "Blumine": "#1f497d",
     "Limeade": "#4e9a06",
     "Steel Blue": "#4f81bd",
@@ -94,27 +94,27 @@ def appointments_list(request):
     # Updating schedule
     ####################
     if bool(form.data.get("update")):
-        api.appointments_update(
-            id=form.data.get("id"),
-            data={
-                "scheduled_time": form.data.get("s_date")
-                + "T"
-                + form.data.get("s_time")
-                + ":00",
-                "duration": form.data.get("duration"),
-                "patient": form.data.get("patient"),
-                "notes": form.data.get("notes"),
-                "reason": form.data.get("reason"),
-                "status": form.data.get("status"),
-                "exam_room": form.data.get("exam_room"),
-                "billing_status": form.data.get("billing_status"),
-                "color": form.data.get("color"),
-            },
-        )
+        data = {
+            "scheduled_time": form.data.get("s_date")
+            + "T"
+            + form.data.get("s_time")
+            + ":00",
+            "duration": form.data.get("duration"),
+            "patient": form.data.get("patient"),
+            "notes": form.data.get("notes"),
+            "reason": form.data.get("reason"),
+            "status": form.data.get("status"),
+            "exam_room": form.data.get("exam_room"),
+            "billing_status": form.data.get("billing_status"),
+            "color": form.data.get("color"),
+        }
+        color = form.data.get("color")
+        api.appointments_update(id=form.data.get("id"), data=data)
     # Deleting schedule
     ####################
     if bool(form.data.get("delete")):
         api.appointments_update(id=form.data.get("id"), data={"deleted_flag": True})
+
     # Date range/start & end
     #########################
     if bool(form.data.get("update_range")):
@@ -129,12 +129,21 @@ def appointments_list(request):
         start = dt_start.strftime("%Y-%m-%d")
         end = dt_end.strftime("%Y-%m-%d")
     working_days = np.busday_count(dt_start.date(), dt_end.date())
+
     # Appointments & Patients
     ##########################
     appointments = api.appointments_list(
         start=start, end=end, params={"deleted_flag": False}
     )
     patients = api.patients_list(params={"doctor": doctor["id"]})
+
+    # Restoring all deleted schedule
+    ##################################
+    if bool(form.data.get("restore")):
+        for k, a in enumerate(appointments):
+            if a["deleted_flag"] == True:
+                print("AAA")
+
     # duration, date & time
     ########################
     duration = 0
@@ -150,12 +159,12 @@ def appointments_list(request):
     waiting = working_days * 8 * 60 - duration
     # Return
     ##########
+    debug = settings.DEBUG
     return render(
         request,
         "appointments_list.html",
         {
             "form": form,
-            "title": "My Form 123",
             "doctor": doctor,
             "appointments": appointments,
             "patients": patients,
@@ -166,6 +175,7 @@ def appointments_list(request):
             "end": end,
             "waiting": waiting,
             "duration": duration,
+            "DEBUG": debug,
         },
     )
 

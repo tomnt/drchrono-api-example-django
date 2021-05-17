@@ -36,7 +36,25 @@ body {
               </tr>
             </tbody>
           </table>
-          <button class="btn btn-success btn-block" type="submit" name="update_range" value = 1>Update range</button>
+          <div class="container-fluid">
+              <div class="col-xs-4 "><button class="btn btn-success btn-block" type="submit" name="update_range" value = 1>Update range</button></div>
+          </div>
+
+
+          {% if DEBUG %}
+          <br>
+          <div class="panel panel-warning">
+            <div class="panel-heading"> Restore all deleted appointments (This is shown in debug mode only) </div>
+            <div class="panel-body">
+              <div class="container-fluid">
+                  <div class="col-xs-4">
+                      <button class="btn btn-warning btn-block" type="submit" name="restore" value = 1>Restore deleted appointments</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+          {%endif%}
+
         </form>
         <br>
       </div>
@@ -115,7 +133,7 @@ body {
                 <td>
                   <select name="status">
                     {% for s in statuses %}
-                      <option value={{s}} {%if s == a.status%}selected{%endif%}>{{s}}</option>
+                      <option {%if s%} value={{s}} {%endif%}{%if s == a.status%}selected{%endif%}>{{s}}</option>
                     {% endfor %}
                   </select>
                 </td>
@@ -123,7 +141,7 @@ body {
                 <td>
                   <select name="color">
                     {% for name, code in colors.items %}
-                      <option value={{code}} {%if code == a.color%}selected{%endif%}>{{name}}{%if code%} ( {{a.color}} ){%endif%}</option>
+                      <option {%if code%}value={{code}} {%else%} value="" {%endif%} {%if code == a.color%}selected{%endif%} > {{name}}{%if code%} ( {{code}} ){%endif%}</option>
                     {% endfor %}
                   </select>
                 </td>
