@@ -135,7 +135,6 @@ def appointments_list(request):
         start=start, end=end, params={"deleted_flag": False}
     )
     patients = api.patients_list(params={"doctor": doctor["id"]})
-
     # duration, date & time
     ########################
     duration = 0
@@ -238,7 +237,6 @@ def patients_list(request):
             "preferred_language": form.data.get("preferred_language"),
             "ethnicity": form.data.get("ethnicity"),
             "race": form.data.get("race"),
-            "patient_photo": form.data.get("patient_photo"),
             "primary_care_physician": form.data.get("primary_care_physician"),
             "employer": form.data.get("employer"),
             "employer_address": form.data.get("employer_address"),
