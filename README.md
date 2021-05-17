@@ -69,3 +69,26 @@ http://localhost:8080/setup/
 ## References
 
 - [README.md(original)](readme/README.md)
+
+# To do/Known issues
+
+- Logout (by UserSocialAuth)
+- Create a new appointment.(Invalid timestamp error)
+- Check duplicated appointment(at the same time & doctor)
+- Exception handling(Date range, Not found, etc)
+- Sort/filter appointments & patients list.
+- Submitted data cleaning
+- Remove hard codings(8 working hours/day, colors, parameters, etc)
+- Patient's screen
+- Admin screen
+
+# Screenshots
+
+Appointments
+![Appointments](readme/img/appointments.png)
+
+Create an appointment
+![Create appointments](readme/img/create_appointments.png)
+
+Patients
+![Patients](readme/img/patients.png)
